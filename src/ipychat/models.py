@@ -21,6 +21,7 @@ AVAILABLE_MODELS = [
     ModelConfig("gemini-1.5-flash", "google", default_temperature=0.7),
 ]
 
+
 def get_ollama_models():
     try:
         models = ollama.list()
@@ -30,8 +31,10 @@ def get_ollama_models():
         return []
     return ollama_models
 
+
 ollama_models = get_ollama_models()
 AVAILABLE_MODELS.extend(ollama_models)
+
 
 def get_models_by_provider(provider: str) -> List[ModelConfig]:
     return [model for model in AVAILABLE_MODELS if model.provider == provider]

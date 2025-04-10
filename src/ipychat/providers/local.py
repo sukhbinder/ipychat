@@ -2,7 +2,7 @@
 
 from typing import Generator
 
-import ollama 
+import ollama
 
 from .base import BaseProvider
 import contextlib
@@ -10,10 +10,9 @@ import contextlib
 
 class OllamaProvider(BaseProvider):
     def initialize_client(self) -> None:
-        self.model = model=self.config["current"]["model"]
+        self.model = self.config["current"]["model"]
         self.client = ollama.Client()
         # todo options like temperate ctx etc
-    
 
     def stream_chat(
         self, system_prompt: str, user_content: str
@@ -25,7 +24,7 @@ class OllamaProvider(BaseProvider):
 
         try:
             response = self.client.chat(
-                model = self.model,
+                model=self.model,
                 messages=messages,
                 stream=True,
             )
