@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 
 import pytest
 
@@ -8,6 +8,7 @@ from ipychat.providers import get_provider
 from ipychat.providers.anthropic import AnthropicProvider
 from ipychat.providers.google import GoogleProvider
 from ipychat.providers.openai import OpenAIProvider
+from ipychat.providers.local import OllamaProvider
 
 
 def test_get_provider(mock_config):
@@ -176,3 +177,44 @@ def test_google_provider_missing_api_key(mock_config):
     mock_console.print.assert_called_once_with(
         "[red]Set [bold]GOOGLE_API_KEY[/bold] in your environment, or run [bold]ipychat config[/bold].[/red]"
     )
+
+
+@pytest.fixture
+def mock_config_ollama():
+    return {"current": {"model": "llama3"}}
+
+
+def test_stream_chat_yields_content(mock_config_ollama):
+    provider = OllamaProvider(mock_config_ollama)
+    provider.model = "llama3"
+
+    # Mock client.chat stream
+    mock_response = [
+        {"message": {"content": "Hello"}},
+        {"message": {"content": " world!"}},
+    ]
+
+    provider.client = MagicMock()
+    provider.client.chat.return_value = mock_response
+
+    gen = provider.stream_chat("You are a bot", "Say something")
+    result = list(gen)
+
+    assert result == ["Hello", " world!"]
+    provider.client.chat.assert_called_once()
+
+
+def test_stream_chat_ignores_keyerror(mock_config_ollama):
+    provider = OllamaProvider(mock_config_ollama)
+    provider.model = "llama3"
+
+    mock_response = [
+        {"no_message": "oops"},  # Should be ignored due to KeyError
+        {"message": {"content": "Recovered"}},
+    ]
+
+    provider.client = MagicMock()
+    provider.client.chat.return_value = mock_response
+
+    result = list(provider.stream_chat("You are a bot", "Continue"))
+    assert result == ["Recovered"]
