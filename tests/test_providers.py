@@ -182,6 +182,8 @@ def test_google_provider_missing_api_key(mock_config):
 def test_stream_chat_yields_content(mock_config_ollama):
     provider = OllamaProvider(mock_config_ollama)
     provider.model = "llama3"
+    provider.temperature = None
+    provider.num_ctx = None
 
     # Mock client.chat stream
     mock_response = [
@@ -202,6 +204,8 @@ def test_stream_chat_yields_content(mock_config_ollama):
 def test_stream_chat_ignores_keyerror(mock_config_ollama):
     provider = OllamaProvider(mock_config_ollama)
     provider.model = "llama3"
+    provider.temperature = None
+    provider.num_ctx = None
 
     mock_response = [
         {"no_message": "oops"},  # Should be ignored due to KeyError
