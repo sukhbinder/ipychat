@@ -6,11 +6,13 @@ from .anthropic import AnthropicProvider
 from .base import BaseProvider
 from .google import GoogleProvider
 from .openai import OpenAIProvider
+from .local import OllamaProvider
 
 PROVIDER_MAP = {
     "openai": OpenAIProvider,
     "anthropic": AnthropicProvider,
     "google": GoogleProvider,
+    "local": OllamaProvider,
 }
 
 

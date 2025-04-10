@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 from .config import load_config
+import ollama
 
 
 @dataclass
@@ -20,6 +21,17 @@ AVAILABLE_MODELS = [
     ModelConfig("gemini-1.5-flash", "google", default_temperature=0.7),
 ]
 
+def get_ollama_models():
+    try:
+        models = ollama.list()
+        ollama_models = [ModelConfig(m.model, "local") for m in models.models]
+    except Exception as ex:
+        # This means ollama is not installed.
+        return []
+    return ollama_models
+
+ollama_models = get_ollama_models()
+AVAILABLE_MODELS.extend(ollama_models)
 
 def get_models_by_provider(provider: str) -> List[ModelConfig]:
     return [model for model in AVAILABLE_MODELS if model.provider == provider]
