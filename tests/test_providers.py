@@ -179,11 +179,6 @@ def test_google_provider_missing_api_key(mock_config):
     )
 
 
-@pytest.fixture
-def mock_config_ollama():
-    return {"current": {"model": "llama3"}}
-
-
 def test_stream_chat_yields_content(mock_config_ollama):
     provider = OllamaProvider(mock_config_ollama)
     provider.model = "llama3"

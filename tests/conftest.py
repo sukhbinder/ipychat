@@ -36,3 +36,8 @@ def mock_config_file(tmp_path: Path, mock_config):
     with open(config_file, "w") as f:
         toml.dump(mock_config, f)
     return config_file
+
+
+@pytest.fixture
+def mock_config_ollama():
+    return {"current": {"model": "llama3"}}
