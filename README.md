@@ -16,7 +16,7 @@
 
 - **Context-Aware**: Automatically uses relevant context from your IPython session
 - **Rich Output**: Markdown-formatted responses with syntax highlighting
-- **Multiple AI Models**: Supports GPT-4o, Claude 3.5 Sonnet, and Gemini. Local models coming soon.
+- **Multiple AI Models**: Supports GPT-4o, Claude 3.5 Sonnet, Gemini and local models using ollama.
 - **Interactive Configuration**: Easy model switching and configuration through magic commands
 
 ## Installation
@@ -60,6 +60,9 @@ In [1]: %models
 ## Configuration
 
 Based on the model you want to use, either set `OPENAI_API_KEY`, or `ANTHROPIC_API_KEY`, or both environment variables. You can also run `ipychat config` to configure `ipychat` interactively.
+
+### Local models
+To use local models using `ollama` ensure that your Ollama server is running and that you have pulled some models. You can use ollama list to check what is locally available.
 
 ## Contributing
 
