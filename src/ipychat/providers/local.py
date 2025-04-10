@@ -34,6 +34,7 @@ class OllamaProvider(BaseProvider):
                 model=self.model,
                 messages=messages,
                 stream=True,
+                options=options
             )
 
             for chunk in response:
