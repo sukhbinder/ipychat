@@ -19,6 +19,9 @@ AVAILABLE_MODELS = [
     ModelConfig("gpt-4o", "openai", default_max_tokens=2000, default_temperature=0.7),
     ModelConfig("claude-3-5-sonnet-20241022", "anthropic"),
     ModelConfig("gemini-1.5-flash", "google", default_temperature=0.7),
+    ModelConfig("gemini-2.0-flash", "google", default_temperature=0.7),
+    ModelConfig("gemini-2.5-pro-exp-03-25", "google", default_temperature=0.7),
+    ModelConfig("gemini-2.0-flash-lite", "google", default_temperature=0.7),
 ]
 
 
